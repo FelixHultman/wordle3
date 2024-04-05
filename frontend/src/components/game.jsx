@@ -14,6 +14,7 @@ function GameContainer() {
   console.log('wordlength:', wordLength);
   console.log('useDouble:', useDouble);
   console.log('username:', userName);
+  console.log('FEEDBACK:', feedback);
 
   const handleStartGame = async () => {
     try {
@@ -88,11 +89,13 @@ function GameContainer() {
           <button onClick={handleGuess}>Confirm guess</button>
         </label>
         <ul>
-          {feedback.map((item, index) => (
-            <li key={index} style={{ color: item.color }}>
-              {item.letter}
-            </li>
-          ))}
+          <li>
+            {feedback.map((item, index) => (
+              <span key={index} style={{ color: item.color }}>
+                {item.letter}
+              </span>
+            ))}
+          </li>
         </ul>
       </div>
     </section>
