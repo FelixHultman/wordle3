@@ -14,11 +14,14 @@ app.get('/', async (req, res) => {});
 app.post('/api/guessWord', (req, res) => {
   const { guessWord, correctWord } = req.body;
 
+  console.log('Received guessWord:', guessWord);
+  console.log('Received correctWord:', correctWord);
+
   if (!guessWord || !correctWord) {
     return res.status(400).json({ error: 'Not valid guess or word' });
   }
-
-  const feedback = wordFeedback(guess, correctWord);
+  console.log('Feedback', feedback);
+  const feedback = wordFeedback(guessWord, correctWord);
 
   res.json(feedback);
 });

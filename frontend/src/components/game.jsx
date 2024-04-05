@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import fetchWordList from '../../../backend/fetchWordlist';
+/* import fetchWordList from '../../../backend/fetchWordlist'; */
 
 function GameContainer() {
   const [userName, setUserName] = useState('');
@@ -7,6 +7,7 @@ function GameContainer() {
   const [wordLength, setWordLength] = useState(4);
   const [guessWord, setGuessWord] = useState('');
   const [correctWord, setCorrectWord] = useState('');
+  const [feedback, setFeedback] = useState([]);
 
   console.log('correct word:', correctWord);
   console.log('guessword:', guessWord);
@@ -26,6 +27,22 @@ function GameContainer() {
       setCorrectWord(randomWord);
     } catch (error) {
       console.error('Error fetching word', error);
+    }
+  };
+
+  const handleGuess = async () => {
+    try {
+      const response = await fetch('http://localhost:5080/api/guessWord', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ guessWord, correctWord }),
+      });
+      const data = await response.json();
+      setFeedback(data);
+    } catch (error) {
+      console.error('Error guess word'.error);
     }
   };
   return (
@@ -68,9 +85,15 @@ function GameContainer() {
         <label htmlFor=''>
           Write guess:
           <input type='text' onChange={(e) => setGuessWord(e.target.value)} />
-          <button onClick={''}>Confirm guess</button>
+          <button onClick={handleGuess}>Confirm guess</button>
         </label>
-        <ul></ul>
+        <ul>
+          {feedback.map((item, index) => (
+            <li key={index} style={{ color: item.color }}>
+              {item.letter}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
