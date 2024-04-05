@@ -32,6 +32,9 @@ function GameContainer() {
   };
 
   const handleGuess = async () => {
+    if (!guessWord || !correctWord) {
+      return;
+    }
     try {
       const response = await fetch('http://localhost:5080/api/guessWord', {
         method: 'POST',
