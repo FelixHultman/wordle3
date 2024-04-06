@@ -8,7 +8,9 @@ function GameContainer() {
   const [guessWord, setGuessWord] = useState('');
   const [correctWord, setCorrectWord] = useState('');
   const [feedback, setFeedback] = useState([]);
+  const [guesses, setGuesses] = useState([]);
 
+  console.log('GUESSES:', guesses);
   console.log('correct word:', correctWord);
   console.log('guessword:', guessWord);
   console.log('wordlength:', wordLength);
@@ -45,6 +47,7 @@ function GameContainer() {
       });
       const data = await response.json();
       setFeedback(data);
+      setGuesses((prevGuesses) => [...prevGuesses, guessWord]);
     } catch (error) {
       console.error('Error guess word'.error);
     }
