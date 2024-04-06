@@ -47,7 +47,10 @@ function GameContainer() {
       });
       const data = await response.json();
       setFeedback(data);
-      setGuesses((prevGuesses) => [...prevGuesses, guessWord]);
+      setGuesses((prevGuesses) => [
+        ...prevGuesses,
+        { guessWord, feedback: data },
+      ]);
     } catch (error) {
       console.error('Error guess word'.error);
     }
@@ -95,13 +98,21 @@ function GameContainer() {
           <button onClick={handleGuess}>Confirm guess</button>
         </label>
         <ul>
-          <li>
-            {feedback.map((item, index) => (
-              <span key={index} style={{ color: item.color }}>
-                {item.letter}
-              </span>
+          {guesses
+            .slice()
+            .reverse()
+            .map((guess, guessIndex) => (
+              <li key={guessIndex}>
+                {guess.guessWord.split('').map((letter, letterIndex) => (
+                  <span
+                    key={letterIndex}
+                    style={{ color: guess.feedback[letterIndex].color }}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </li>
             ))}
-          </li>
         </ul>
       </div>
     </section>
