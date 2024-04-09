@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import GameContainer from './components/game';
+import GameContainer from './components/gameContainer';
 
 function App() {
   return (
