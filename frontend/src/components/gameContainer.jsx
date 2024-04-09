@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import GuessMenu from './guessMenu';
+import StartMenu from './startMenu';
 
 function GameContainer() {
   const [userName, setUserName] = useState('');
@@ -109,68 +111,25 @@ function GameContainer() {
 
   return (
     <section>
-      <h1>This is Wordle 2</h1>
+      <h1>This is Wordle 3</h1>
       {!gameStarted && (
-        <menu>
-          <p>Choose your game settings and name here</p>
-          <label>
-            Write your name here:
-            <input
-              type='text'
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-          </label>
-          <label>
-            Do you want words with double letters
-            <input
-              type='checkbox'
-              checked={useDouble}
-              onChange={(e) => setUsedouble(e.target.checked)}
-            ></input>
-          </label>
-
-          <label>
-            <select onChange={(e) => setWordLength(parseInt(e.target.value))}>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-            </select>
-            <button onClick={handleStartGame}>Press here to start game</button>
-          </label>
-        </menu>
+        <StartMenu
+          userName={userName}
+          setUserName={setUserName}
+          useDouble={useDouble}
+          setUsedouble={setUsedouble}
+          wordLength={wordLength}
+          setWordLength={setWordLength}
+          handleStartGame={handleStartGame}
+        />
       )}
       {gameStarted && (
-        <div>
-          <p></p>
-          <label htmlFor=''>
-            Write guess:
-            <input
-              type='text'
-              value={guessWord}
-              onChange={(e) => setGuessWord(e.target.value)}
-            />
-            <button onClick={handleGuess}>Confirm guess</button>
-          </label>
-          <ul>
-            {guesses
-              .slice()
-              .reverse()
-              .map((guess, guessIndex) => (
-                <li key={guessIndex}>
-                  {guess.guessWord.split('').map((letter, letterIndex) => (
-                    <span
-                      key={letterIndex}
-                      style={{ color: guess.feedback[letterIndex].color }}
-                    >
-                      {letter.toUpperCase()}
-                    </span>
-                  ))}
-                </li>
-              ))}
-          </ul>
-        </div>
+        <GuessMenu
+          guessWord={guessWord}
+          setGuessWord={setGuessWord}
+          handleGuess={handleGuess}
+          guesses={guesses}
+        />
       )}
       {gameEnded && (
         <div className='modal'>
