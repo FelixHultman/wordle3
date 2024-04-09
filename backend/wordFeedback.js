@@ -26,7 +26,10 @@ function WordFeedback(guessWord, correctWord) {
       });
     } else if (
       correctArray.includes(guessedLetter) &&
-      !correctlyGuessed.has(guessedLetter)
+      (!correctlyGuessed.has(guessedLetter) ||
+        correctArray.lastIndexOf(guessedLetter) !==
+          guessArray.lastIndexOf(guessedLetter)) &&
+      guessedLetter !== correctLetter
     ) {
       feedback.push({
         letter: guessedLetter,
