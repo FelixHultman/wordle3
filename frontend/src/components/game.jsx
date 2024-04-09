@@ -112,9 +112,7 @@ function GameContainer() {
       <h1>This is Wordle 2</h1>
       {!gameStarted && (
         <menu>
-          <p>
-            Choose your game settings and name here {userName} {guessWord}
-          </p>
+          <p>Choose your game settings and name here</p>
           <label>
             Write your name here:
             <input
