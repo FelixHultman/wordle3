@@ -20,8 +20,9 @@ app.post('/api/guessWord', (req, res) => {
   if (!guessWord || !correctWord) {
     return res.status(400).json({ error: 'Not valid guess or word' });
   }
-  console.log('Feedback', feedback);
+
   const feedback = wordFeedback(guessWord, correctWord);
+  console.log('Feedback', feedback);
 
   res.json(feedback);
 });

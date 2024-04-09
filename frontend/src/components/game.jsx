@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-/* import fetchWordList from '../../../backend/fetchWordlist'; */
+import React, { useEffect, useState } from 'react';
 
 function GameContainer() {
   const [userName, setUserName] = useState('');
@@ -9,6 +8,8 @@ function GameContainer() {
   const [correctWord, setCorrectWord] = useState('');
   const [feedback, setFeedback] = useState([]);
   const [guesses, setGuesses] = useState([]);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
 
   console.log('GUESSES:', guesses);
   console.log('correct word:', correctWord);
@@ -18,16 +19,54 @@ function GameContainer() {
   console.log('username:', userName);
   console.log('FEEDBACK:', feedback);
 
+  useEffect(() => {
+    if (gameStarted) {
+      handleStartGame();
+    }
+  }, [gameStarted]);
+
+  function resetGame() {
+    setUserName('');
+    setUsedouble(false);
+    setWordLength(4);
+    setGuessWord('');
+    setCorrectWord('');
+    setFeedback([]);
+    setGuesses([]);
+  }
+
+  function hasDouble(word) {
+    const letters = {};
+    for (const letter of word) {
+      if (letters[letter]) {
+        return true;
+      }
+      letters[letter] = true;
+    }
+    return false;
+  }
+
   const handleStartGame = async () => {
     try {
       const response = await fetch('http://localhost:5080/api/wordlist');
       const data = await response.json();
 
-      const wordList = data.wordlist;
-      console.log('word list:', wordList);
-      const randomIndex = Math.floor(Math.random() * wordList.length);
-      const randomWord = wordList[randomIndex];
+      let settingsWordlist = data.wordlist;
+
+      settingsWordlist = settingsWordlist.filter(
+        (word) => word.length === wordLength
+      );
+
+      if (!useDouble) {
+        settingsWordlist = settingsWordlist.filter((word) => !hasDouble(word));
+      }
+
+      console.log('word list:', settingsWordlist);
+      const randomIndex = Math.floor(Math.random() * settingsWordlist.length);
+      const randomWord = settingsWordlist[randomIndex];
       setCorrectWord(randomWord);
+
+      setGameStarted(true);
     } catch (error) {
       console.error('Error fetching word', error);
     }
@@ -35,6 +74,16 @@ function GameContainer() {
 
   const handleGuess = async () => {
     if (!guessWord || !correctWord) {
+      return;
+    }
+
+    if (guessWord.length !== correctWord.length) {
+      alert('Your guess is not matching the length of the correct word');
+      return;
+    }
+
+    if (guessWord === correctWord) {
+      setGameEnded(true);
       return;
     }
     try {
@@ -51,70 +100,96 @@ function GameContainer() {
         ...prevGuesses,
         { guessWord, feedback: data },
       ]);
+
+      setGuessWord('');
     } catch (error) {
       console.error('Error guess word'.error);
     }
   };
+
   return (
     <section>
       <h1>This is Wordle 2</h1>
+      {!gameStarted && (
+        <menu>
+          <p>
+            Choose your game settings and name here {userName} {guessWord}
+          </p>
+          <label>
+            Write your name here:
+            <input
+              type='text'
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
+          </label>
+          <label>
+            Do you want words with double letters
+            <input
+              type='checkbox'
+              checked={useDouble}
+              onChange={(e) => setUsedouble(e.target.checked)}
+            ></input>
+          </label>
 
-      <menu>
-        <p>
-          Choose your game settings and name here {userName} {guessWord}
-        </p>
-        <label>
-          Write your name here:
-          <input
-            type='text'
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          Do you want words with double letters
-          <input
-            type='checkbox'
-            checked={useDouble}
-            onChange={(e) => setUsedouble(e.target.checked)}
-          ></input>
-        </label>
-
-        <label>
-          <select onChange={(e) => setWordLength(e.target.value)}>
-            <option value='4'>4</option>
-            <option value='5'>5</option>
-            <option value='6'>6</option>
-          </select>
-          <button onClick={handleStartGame}>Press here to start game</button>
-        </label>
-      </menu>
-      <div>
-        <p></p>
-        <label htmlFor=''>
-          Write guess:
-          <input type='text' onChange={(e) => setGuessWord(e.target.value)} />
-          <button onClick={handleGuess}>Confirm guess</button>
-        </label>
-        <ul>
-          {guesses
-            .slice()
-            .reverse()
-            .map((guess, guessIndex) => (
-              <li key={guessIndex}>
-                {guess.guessWord.split('').map((letter, letterIndex) => (
-                  <span
-                    key={letterIndex}
-                    style={{ color: guess.feedback[letterIndex].color }}
-                  >
-                    {letter}
-                  </span>
-                ))}
-              </li>
-            ))}
-        </ul>
-      </div>
+          <label>
+            <select onChange={(e) => setWordLength(parseInt(e.target.value))}>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+            </select>
+            <button onClick={handleStartGame}>Press here to start game</button>
+          </label>
+        </menu>
+      )}
+      {gameStarted && (
+        <div>
+          <p></p>
+          <label htmlFor=''>
+            Write guess:
+            <input
+              type='text'
+              value={guessWord}
+              onChange={(e) => setGuessWord(e.target.value)}
+            />
+            <button onClick={handleGuess}>Confirm guess</button>
+          </label>
+          <ul>
+            {guesses
+              .slice()
+              .reverse()
+              .map((guess, guessIndex) => (
+                <li key={guessIndex}>
+                  {guess.guessWord.split('').map((letter, letterIndex) => (
+                    <span
+                      key={letterIndex}
+                      style={{ color: guess.feedback[letterIndex].color }}
+                    >
+                      {letter.toUpperCase()}
+                    </span>
+                  ))}
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+      {gameEnded && (
+        <div className='modal'>
+          <div className='modal-content'>
+            <p>Congratulations, {userName}! You won!</p>
+            <button
+              onClick={() => {
+                resetGame();
+                setGameEnded(false);
+                setGameStarted(false);
+              }}
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
