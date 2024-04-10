@@ -16,13 +16,13 @@ function GameContainer() {
 
   console.log('GUESSES:', guesses);
   console.log('correct word:', correctWord);
-  console.log('guessword:', guessWord);
-  console.log('wordlength:', wordLength);
+  /*   console.log('guessword:', guessWord);
+  console.log('wordlength:', wordLength); */
   console.log('useDouble:', useDouble);
-  console.log('username:', userName);
+  /*  console.log('username:', userName);
   console.log('FEEDBACK:', feedback);
   console.log('TIMER:', timer);
-
+ */
   useEffect(() => {
     let interval;
     if (gameStarted && !gameEnded) {
@@ -42,6 +42,7 @@ function GameContainer() {
     setCorrectWord('');
     setFeedback([]);
     setGuesses([]);
+    setTimer(0);
   }
 
   function hasDouble(word) {
@@ -66,7 +67,9 @@ function GameContainer() {
         (word) => word.length === wordLength
       );
 
-      if (!useDouble) {
+      if (useDouble) {
+        settingsWordlist = settingsWordlist.filter((word) => hasDouble(word));
+      } else {
         settingsWordlist = settingsWordlist.filter((word) => !hasDouble(word));
       }
 
