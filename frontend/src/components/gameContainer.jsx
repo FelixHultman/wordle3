@@ -12,6 +12,7 @@ function GameContainer() {
   const [guesses, setGuesses] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
+  const [timer, setTimer] = useState(0);
 
   console.log('GUESSES:', guesses);
   console.log('correct word:', correctWord);
@@ -22,10 +23,17 @@ function GameContainer() {
   console.log('FEEDBACK:', feedback);
 
   useEffect(() => {
-    if (gameStarted) {
-      handleStartGame();
+    let interval;
+    if (gameStarted && !gameEnded) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
     }
-  }, [gameStarted]);
+
+    return () => clearInterval(interval);
+  }, [gameStarted, gameEnded]);
+
+  console.log('TIMER:', timer);
 
   function resetGame() {
     setUserName('');
