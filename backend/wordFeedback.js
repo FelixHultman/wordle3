@@ -26,7 +26,8 @@ function WordFeedback(guessWord, correctWord) {
       });
     } else if (
       correctArray.includes(guessedLetter) &&
-      !correctlyGuessed.has(guessedLetter)
+      !correctlyGuessed.has(guessedLetter) &&
+      correctArray.indexOf(guessedLetter) !== i
     ) {
       feedback.push({
         letter: guessedLetter,
