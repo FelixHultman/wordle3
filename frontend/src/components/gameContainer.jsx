@@ -21,6 +21,7 @@ function GameContainer() {
   console.log('useDouble:', useDouble);
   console.log('username:', userName);
   console.log('FEEDBACK:', feedback);
+  console.log('TIMER:', timer);
 
   useEffect(() => {
     let interval;
@@ -32,8 +33,6 @@ function GameContainer() {
 
     return () => clearInterval(interval);
   }, [gameStarted, gameEnded]);
-
-  console.log('TIMER:', timer);
 
   function resetGame() {
     setUserName('');
