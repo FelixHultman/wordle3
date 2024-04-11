@@ -149,13 +149,23 @@ function GameContainer() {
           <div className='modal-content'>
             <p>Congratulations, {userName}! You won!</p>
             <button
+              onClick={async () => {
+                await saveGameStats();
+                resetGame();
+                setGameEnded(false);
+                setGameStarted(false);
+              }}
+            >
+              Send to highscore and play again
+            </button>
+            <button
               onClick={() => {
                 resetGame();
                 setGameEnded(false);
                 setGameStarted(false);
               }}
             >
-              Play Again
+              Play Again and dont save
             </button>
           </div>
         </div>
