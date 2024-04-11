@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 
-const Item = mongoose.model('item', {
-  label: String,
-  completed: Boolean,
+const gameStats = mongoose.model('gameStats', {
+  userName: String,
+  useDouble: Boolean,
+  wordLength: Number,
+  guesses: Array,
+  timer: Number,
 });
 
-export { Item };
+export { gameStats };

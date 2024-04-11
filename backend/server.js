@@ -4,7 +4,7 @@ import { engine } from 'express-handlebars';
 import fetchWordlist from './fetchWordlist.js';
 import wordFeedback from './wordFeedback.js';
 import mongoose from 'mongoose';
-import { Item } from './src/models.js';
+import { gameStats } from './src/models.js';
 
 mongoose.connect('mongodb://127.0.0.1:27017/test');
 
@@ -54,22 +54,22 @@ app.get('/api/wordlist', async (req, res) => {
   }
 });
 
-app.get('/api/items', async (req, res) => {
+app.get('/api/gameStat', async (req, res) => {
   try {
-    const items = await Item.find();
-    res.json({ items });
+    const stats = await gameStats.find();
+    res.json({ stats });
   } catch (error) {
     console.error('Error fetching items:', error);
     res.status(500).json({ error: 'Failed to fetch items' });
   }
 });
 
-app.post('api/items', async (req, res) => {
-  const itemData = req.body;
+app.post('/api/gameStat', async (req, res) => {
+  const statData = req.body;
   console.log(req.body);
 
-  const itemModel = new Item(itemData);
-  await itemModel.save();
+  const statModel = new gameStats(statData);
+  await statModel.save();
 });
 
 app.listen(PORT, () => {
