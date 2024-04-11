@@ -3,6 +3,10 @@ import cors from 'cors';
 import { engine } from 'express-handlebars';
 import fetchWordlist from './fetchWordlist.js';
 import wordFeedback from './wordFeedback.js';
+import mongoose from 'mongoose';
+import { Item } from './src/models.js';
+
+mongoose.connect('mongodb://127.0.0.1:27017/test');
 
 const app = express();
 const PORT = process.env.PORT || 5080;
@@ -48,6 +52,24 @@ app.get('/api/wordlist', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch wordlist' });
   }
+});
+
+app.get('/api/items', async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.json({ items });
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ error: 'Failed to fetch items' });
+  }
+});
+
+app.post('api/items', async (req, res) => {
+  const itemData = req.body;
+  console.log(req.body);
+
+  const itemModel = new Item(itemData);
+  await itemModel.save();
 });
 
 app.listen(PORT, () => {
