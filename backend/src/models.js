@@ -2,9 +2,10 @@ import mongoose from 'mongoose';
 
 const gameStats = mongoose.model('gameStats', {
   userName: String,
+  correctWord: String,
   useDouble: Boolean,
   wordLength: Number,
-  guesses: Array,
+  guesses: Number,
   timer: Number,
 });
 

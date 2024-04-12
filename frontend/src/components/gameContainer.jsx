@@ -54,6 +54,7 @@ function GameContainer() {
         },
         body: JSON.stringify({
           userName: userName,
+          correctWord: correctWord,
           useDouble: useDouble,
           wordLength: wordLength,
           guesses: guesses.length,

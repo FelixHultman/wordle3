@@ -31,15 +31,15 @@ app.get('/', async (req, res) => {});
 app.post('/api/guessWord', (req, res) => {
   const { guessWord, correctWord } = req.body;
 
-  console.log('Received guessWord:', guessWord);
-  console.log('Received correctWord:', correctWord);
+  /* console.log('Received guessWord:', guessWord);
+  console.log('Received correctWord:', correctWord); */
 
   if (!guessWord || !correctWord) {
     return res.status(400).json({ error: 'Not valid guess or word' });
   }
 
   const feedback = wordFeedback(guessWord, correctWord);
-  console.log('Feedback', feedback);
+  /* console.log('Feedback', feedback); */
 
   res.json(feedback);
 });
@@ -65,11 +65,17 @@ app.get('/api/gameStat', async (req, res) => {
 });
 
 app.post('/api/gameStat', async (req, res) => {
-  const statData = req.body;
-  console.log(req.body);
+  try {
+    const playerStat = req.body;
+    console.log('GameStats:', req.body);
 
-  const statModel = new gameStats(statData);
-  await statModel.save();
+    const statModel = new gameStats(playerStat);
+    await statModel.save();
+    res.status(200).send('Stats are saved!');
+  } catch (error) {
+    console.error('Error occurred while saving player score:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.listen(PORT, () => {
