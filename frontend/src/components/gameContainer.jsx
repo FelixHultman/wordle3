@@ -45,6 +45,30 @@ function GameContainer() {
     setTimer(0);
   }
 
+  const saveGameStats = async () => {
+    try {
+      const response = await fetch('http://localhost:5080/api/gameStat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: userName,
+          useDouble: useDouble,
+          wordLength: wordLength,
+          guesses: guesses.length,
+          timer: timer,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to save game stats');
+      }
+      console.log('Game stats saved successfully!');
+    } catch (error) {
+      console.error('Error saving game stats:', error);
+    }
+  };
+
   function hasDouble(word) {
     const letters = {};
     for (const letter of word) {
@@ -121,9 +145,9 @@ function GameContainer() {
 
   return (
     <section>
-      <a href='/api/highscore'>Home</a>
+      <a href='/'>Home</a>
       <a href='/api/highscore'>Highscore</a>
-      <a href='/api/highscore'>About us</a>
+      <a href='/api/aboutUs'>About us</a>
       <h1>This is Wordle 3</h1>
       {!gameStarted && (
         <StartMenu
@@ -148,16 +172,18 @@ function GameContainer() {
         <div className='modal'>
           <div className='modal-content'>
             <p>Congratulations, {userName}! You won!</p>
+
             <button
               onClick={async () => {
-                await saveGameStats();
                 resetGame();
                 setGameEnded(false);
                 setGameStarted(false);
+                await saveGameStats();
               }}
             >
               Send to highscore and play again
             </button>
+
             <button
               onClick={() => {
                 resetGame();
