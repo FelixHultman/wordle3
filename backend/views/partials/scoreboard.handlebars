@@ -1,0 +1,15 @@
+<div class='highscore-stats'>
+
+  <ul>
+    {{#each highscoreStats}}
+      <li>
+        <strong>Username: {{userName}} </strong>
+        <strong>Correct word: {{correctWord}} </strong>
+        <strong>Time: {{timer}}</strong>
+        <strong>Use double?: {{useDouble}} </strong>
+        <strong>Word length:{{wordLength}} </strong>
+
+      </li>
+    {{/each}}
+  </ul>
+</div>

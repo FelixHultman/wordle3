@@ -17,9 +17,14 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-app.get('/api/highscore', (req, res) => {
+app.get('/api/highscore', async (req, res) => {
   try {
-    res.render('highscore');
+    const highscoreStats = await gameStats
+      .find()
+      .sort({ timer: 1 })
+      .limit(5)
+      .lean();
+    res.render('highscore', { highscoreStats });
   } catch (error) {
     console.error('Error rendering highscore template:', error);
     res.status(500).send('Internal Server Error');
