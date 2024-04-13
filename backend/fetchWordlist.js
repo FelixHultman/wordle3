@@ -10,9 +10,9 @@ async function fetchWordlist() {
 
     const words = await response.json();
 
-    const wordlist = Object.keys(words).filter(
-      (word) => word.length >= 4 && word.length <= 6
-    );
+    const wordlist = Object.keys(words)
+      .filter((word) => word.length >= 4 && word.length <= 6)
+      .map((word) => word.toUpperCase());
     return wordlist;
   } catch (error) {
     console.error('Errors fetching the words', error);

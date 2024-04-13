@@ -8,7 +8,7 @@ function GuessMenu({ guessWord, setGuessWord, handleGuess, guesses }) {
         <input
           type='text'
           value={guessWord}
-          onChange={(e) => setGuessWord(e.target.value)}
+          onChange={(e) => setGuessWord(e.target.value.toUpperCase())}
         />
         <button onClick={handleGuess}>Confirm guess</button>
       </label>
