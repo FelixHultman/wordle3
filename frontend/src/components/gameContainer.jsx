@@ -146,9 +146,11 @@ function GameContainer() {
 
   return (
     <section>
-      <a href='/'>Home</a>
-      <a href='/api/highscore'>Highscore</a>
-      <a href='/api/aboutUs'>About us</a>
+      <header>
+        <a href='/'>Home</a>
+        <a href='/api/highscore'>Highscore</a>
+        <a href='/api/aboutUs'>About us</a>
+      </header>
       <h1>This is Wordle 3</h1>
       {!gameStarted && (
         <StartMenu

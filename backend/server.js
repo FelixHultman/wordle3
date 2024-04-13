@@ -31,6 +31,15 @@ app.get('/api/highscore', async (req, res) => {
   }
 });
 
+app.get('/api/aboutUs', (req, res) => {
+  try {
+    res.render('aboutUs');
+  } catch (error) {
+    console.error('Error rendering highscore template:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('/', async (req, res) => {});
 
 app.post('/api/guessWord', (req, res) => {
