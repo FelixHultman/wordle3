@@ -11,7 +11,7 @@ function StartMenu({
 }) {
   return (
     <menu>
-      <p>Choose your game settings and name here</p>
+      <p class='text-red-700'>Choose your game settings and name here</p>
       <label>
         Write your name here:
         <input
