@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import expressHandlebars from 'express-handlebars';
 import { engine } from 'express-handlebars';
 import fetchWordlist from './fetchWordlist.js';
 import wordFeedback from './wordFeedback.js';
@@ -12,10 +13,11 @@ const app = express();
 const PORT = process.env.PORT || 5080;
 app.use(cors());
 app.use(express.json());
-
-app.engine('handlebars', engine());
+app.engine('handlebars', expressHandlebars.engine());
+/* app.engine('handlebars', engine()); */
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+app.use('/public', express.static('public'));
 
 app.get('/api/highscore', async (req, res) => {
   try {
