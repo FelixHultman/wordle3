@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import expressHandlebars from 'express-handlebars';
-import { engine } from 'express-handlebars'; 
+import { engine } from 'express-handlebars';
 import fetchWordlist from './fetchWordlist.js';
 import wordFeedback from './wordFeedback.js';
 import mongoose from 'mongoose';
@@ -21,7 +21,6 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 app.use(express.static('public'));
 
-
 app.get('/', async (req, res) => {
   try {
     const html = await fs.readFile('../frontend/dist/index.html');
@@ -37,7 +36,7 @@ app.get('/highscore', async (req, res) => {
     const highscoreStats = await gameStats
       .find()
       .sort({ timer: 1 })
-      .limit(5)
+      .limit(6)
       .lean();
     res.render('highscore', { highscoreStats });
   } catch (error) {
@@ -54,8 +53,6 @@ app.get('/aboutUs', (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-
 
 app.post('/api/guessWord', (req, res) => {
   const { guessWord, correctWord } = req.body;
@@ -106,9 +103,6 @@ app.post('/api/gameStat', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log('Server is up');

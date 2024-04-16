@@ -1,15 +1,20 @@
-<div class='highscore-stats'>
-
-  <ul>
-    {{#each highscoreStats}}
-      <li>
-        <strong>Username: {{userName}} </strong>
-        <strong>Correct word: {{correctWord}} </strong>
-        <strong>Time: {{timer}}</strong>
-        <strong>Use double?: {{useDouble}} </strong>
-        <strong>Word length:{{wordLength}} </strong>
-
-      </li>
-    {{/each}}
-  </ul>
+<div class='flex flex-col items-center'>
+  <h1 class='text-red-500 mt-8 mb-4 text-center text-5xl'>Highscores</h1>
+  <div class='flex flex-wrap'>
+    <ul class='grid grid-cols-2 gap-4 mt-8 justify-center items-center'>
+      {{#each highscoreStats}}
+        <li
+          class='bg-blue-300 p-1 w-full flex justify-center items-center mb-4 rounded border-2'
+        >
+          <div class='flex flex-col mr-4'>
+            <strong>Username: {{userName}} </strong>
+            <strong>Correct word: {{correctWord}} </strong>
+            <strong>Time: {{timer}} Seconds</strong>
+            <strong>Use double?: {{useDouble}} </strong>
+            <strong>Word length:{{wordLength}} Letters </strong>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
 </div>

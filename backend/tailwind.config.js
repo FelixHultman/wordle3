@@ -5,7 +5,11 @@ export default {
     './views/**/*.{html,js,handlebars}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['inter', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };

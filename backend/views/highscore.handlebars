@@ -6,14 +6,10 @@
     <link href='/output.css' type='text/css' rel='stylesheet' />
   </head>
 
-  <body>
-    {{> header}}
-    <main class="flex flex-row bg-red-500">
-      <h1 class="bg-red-500">Higscores</h1>
-      <h2 class="text-red-500">Det här komemr inte lösa sig</h2>
-      <h3 class="text-yellow-500">hej</h3>
-      <h4 class="text-blue-500">hejehej</h4>
-       {{> scoreboard}}
+  <body class="bg-gradient-to-r from-green-300 to-blue-700 flex flex-col items-center">
+      {{> header}}<!-- prettier-ignore -->
+    <main class="flex flex-row">
+      {{> scoreboard}}<!-- prettier-ignore -->
     </main>
   </body>
 
