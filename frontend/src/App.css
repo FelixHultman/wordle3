@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-  background-color: #c0eb9b;
+  background-image: linear-gradient(to right, #c0eb9b, #355c7d);
   overflow: hidden;
 }

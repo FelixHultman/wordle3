@@ -2,7 +2,7 @@ import React from 'react';
 
 function GuessMenu({ guessWord, setGuessWord, handleGuess, guesses }) {
   return (
-    <div class="flex flex-col items-center text">
+    <div class='flex flex-col items-center text '>
       <label htmlFor=''>
         Write guess:
         <input
