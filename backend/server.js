@@ -12,13 +12,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/test');
 
 const app = express();
 const PORT = process.env.PORT || 5080;
+app.use('/assets', express.static('../frontend/dist/assets'));
 app.use(cors());
 app.use(express.json());
 app.engine('handlebars', expressHandlebars.engine());
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-app.use(express.json());
+app.use(express.static('public'));
+
 
 app.get('/', async (req, res) => {
   try {
@@ -30,7 +32,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.get('/api/highscore', async (req, res) => {
+app.get('/highscore', async (req, res) => {
   try {
     const highscoreStats = await gameStats
       .find()
@@ -44,7 +46,7 @@ app.get('/api/highscore', async (req, res) => {
   }
 });
 
-app.get('/api/aboutUs', (req, res) => {
+app.get('/aboutUs', (req, res) => {
   try {
     res.render('aboutUs');
   } catch (error) {
@@ -105,8 +107,8 @@ app.post('/api/gameStat', async (req, res) => {
   }
 });
 
-express.static('public');
-app.use('/assets', express.static('../frontend/dist/assets'));
+
+
 
 app.listen(PORT, () => {
   console.log('Server is up');
