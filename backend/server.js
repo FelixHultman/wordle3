@@ -105,6 +105,7 @@ app.post('/api/gameStat', async (req, res) => {
   }
 });
 
+express.static('public');
 app.use('/assets', express.static('../frontend/dist/assets'));
 
 app.listen(PORT, () => {
