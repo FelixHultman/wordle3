@@ -57,15 +57,11 @@ app.get('/aboutUs', (req, res) => {
 app.post('/api/guessWord', (req, res) => {
   const { guessWord, correctWord } = req.body;
 
-  /* console.log('Received guessWord:', guessWord);
-  console.log('Received correctWord:', correctWord); */
-
   if (!guessWord || !correctWord) {
     return res.status(400).json({ error: 'Not valid guess or word' });
   }
 
   const feedback = wordFeedback(guessWord, correctWord);
-  /* console.log('Feedback', feedback); */
 
   res.json(feedback);
 });
@@ -93,7 +89,6 @@ app.get('/api/gameStat', async (req, res) => {
 app.post('/api/gameStat', async (req, res) => {
   try {
     const playerStat = req.body;
-    console.log('GameStats:', req.body);
 
     const statModel = new gameStats(playerStat);
     await statModel.save();

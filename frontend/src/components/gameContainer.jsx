@@ -14,15 +14,6 @@ function GameContainer() {
   const [gameEnded, setGameEnded] = useState(false);
   const [timer, setTimer] = useState(0);
 
-  console.log('GUESSES:', guesses);
-  console.log('correct word:', correctWord);
-  /*   console.log('guessword:', guessWord);
-  console.log('wordlength:', wordLength); */
-  console.log('useDouble:', useDouble);
-  /*  console.log('username:', userName);
-  console.log('FEEDBACK:', feedback);
-  console.log('TIMER:', timer);
- */
   useEffect(() => {
     let interval;
     if (gameStarted && !gameEnded) {
@@ -98,7 +89,6 @@ function GameContainer() {
         settingsWordlist = settingsWordlist.filter((word) => !hasDouble(word));
       }
 
-      console.log('word list:', settingsWordlist);
       const randomIndex = Math.floor(Math.random() * settingsWordlist.length);
       const randomWord = settingsWordlist[randomIndex];
       setCorrectWord(randomWord);
