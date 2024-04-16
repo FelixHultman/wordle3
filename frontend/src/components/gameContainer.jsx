@@ -136,7 +136,7 @@ function GameContainer() {
 
   return (
     <section class='flex flex-col items-center text max-h-screen overflow-y-auto'>
-      <header class='border-2 text-6xl space-x-6 pb-14 bg-blue-300 w-full flex justify-center items-center'>
+      <header class='place-content-evenly border-2 text-6xl space-x-6 p-10 bg-blue-300 w-full flex items-center'>
         <a href='/' class='hover:text-red-500'>
           Home
         </a>
