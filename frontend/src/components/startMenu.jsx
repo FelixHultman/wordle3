@@ -10,9 +10,9 @@ function StartMenu({
   handleStartGame,
 }) {
   return (
-    <menu>
-      <p class='text-red-700'>Choose your game settings and name here</p>
-      <label>
+    <menu class="flex flex-col items-center text">
+      <p class='text-red-700 pb-8'>Choose your game settings and name here</p>
+      <label class='pb-8'>
         Write your name here:
         <input
           type='text'
@@ -21,7 +21,7 @@ function StartMenu({
           }}
         />
       </label>
-      <label>
+      <label class='pb-8'>
         Do you want words with double letters
         <input
           type='checkbox'
@@ -30,14 +30,16 @@ function StartMenu({
         ></input>
       </label>
 
-      <label>
+      <label class='pb-8'>
+        Choose your word length
         <select onChange={(e) => setWordLength(parseInt(e.target.value))}>
           <option value={4}>4</option>
           <option value={5}>5</option>
           <option value={6}>6</option>
         </select>
-        <button onClick={handleStartGame}>Press here to start game</button>
-      </label>
+        </label>
+        <button onClick={handleStartGame} class='border-2'>Press here to start game</button>
+      
     </menu>
   );
 }

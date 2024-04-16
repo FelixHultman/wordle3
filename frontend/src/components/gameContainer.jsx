@@ -145,13 +145,13 @@ function GameContainer() {
   };
 
   return (
-    <section>
-      <header>
+    <section class="flex flex-col items-center text">
+      <header class='text-6xl space-x-6 pb-14 bg-gray-500 w-full flex justify-center items-center'>
         <a href='/'>Home</a>
         <a href='/highscore'>Highscore</a>
         <a href='/aboutUs'>About us</a>
       </header>
-      <h1>This is Wordle 3</h1>
+      <h1 class='text-5xl pb-14 pt-20'>This is Wordle 3</h1>
       {!gameStarted && (
         <StartMenu
           userName={userName}
@@ -172,11 +172,11 @@ function GameContainer() {
         />
       )}
       {gameEnded && (
-        <div className='modal'>
-          <div className='modal-content'>
+        <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+          <div class="bg-white p-8 rounded-lg">
             <p>Congratulations, {userName}! You won!</p>
 
-            <button
+            <button class="mt-4 mr-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               onClick={async () => {
                 resetGame();
                 setGameEnded(false);
@@ -187,7 +187,7 @@ function GameContainer() {
               Send to highscore and play again
             </button>
 
-            <button
+            <button class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
               onClick={() => {
                 resetGame();
                 setGameEnded(false);
