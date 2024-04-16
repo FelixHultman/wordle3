@@ -1,11 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import expressHandlebars from 'express-handlebars';
-import { engine } from 'express-handlebars';
+import { engine } from 'express-handlebars'; 
 import fetchWordlist from './fetchWordlist.js';
 import wordFeedback from './wordFeedback.js';
 import mongoose from 'mongoose';
 import { gameStats } from './src/models.js';
+import fs from 'fs/promises';
 
 mongoose.connect('mongodb://127.0.0.1:27017/test');
 
@@ -14,10 +15,20 @@ const PORT = process.env.PORT || 5080;
 app.use(cors());
 app.use(express.json());
 app.engine('handlebars', expressHandlebars.engine());
-/* app.engine('handlebars', engine()); */
+app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-app.use('/public', express.static('public'));
+app.use(express.json());
+
+app.get('/', async (req, res) => {
+  try {
+    const html = await fs.readFile('../frontend/dist/index.html');
+    res.type('html').send(html);
+  } catch (error) {
+    console.error('Error occurred while reading the file:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 app.get('/api/highscore', async (req, res) => {
   try {
@@ -42,7 +53,7 @@ app.get('/api/aboutUs', (req, res) => {
   }
 });
 
-app.get('/', async (req, res) => {});
+
 
 app.post('/api/guessWord', (req, res) => {
   const { guessWord, correctWord } = req.body;
@@ -93,6 +104,8 @@ app.post('/api/gameStat', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.use('/assets', express.static('../frontend/dist/assets'));
 
 app.listen(PORT, () => {
   console.log('Server is up');

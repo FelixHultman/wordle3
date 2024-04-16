@@ -47,7 +47,7 @@ function GameContainer() {
 
   const saveGameStats = async () => {
     try {
-      const response = await fetch('http://localhost:5080/api/gameStat', {
+      const response = await fetch('/api/gameStat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function GameContainer() {
 
   const handleStartGame = async () => {
     try {
-      const response = await fetch('http://localhost:5080/api/wordlist');
+      const response = await fetch('/api/wordlist');
       const data = await response.json();
 
       let settingsWordlist = data.wordlist;
@@ -124,7 +124,7 @@ function GameContainer() {
       return;
     }
     try {
-      const response = await fetch('http://localhost:5080/api/guessWord', {
+      const response = await fetch('/api/guessWord', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
