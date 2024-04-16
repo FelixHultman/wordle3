@@ -607,6 +607,10 @@ video {
   flex-wrap: wrap;
 }
 
+.place-content-evenly {
+  place-content: space-evenly;
+}
+
 .items-center {
   align-items: center;
 }
@@ -665,8 +669,8 @@ video {
   padding: 0.25rem;
 }
 
-.pb-14 {
-  padding-bottom: 3.5rem;
+.p-10 {
+  padding: 2.5rem;
 }
 
 .pb-10 {
